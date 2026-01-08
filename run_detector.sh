@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DEFAULT_IMAGE="./CTMRI/patient1/2/0001.png"
+DEFAULT_IMAGE="./CTMRI/patient1/3/0034.png"
 
 IMAGE_PATH="${1:-$DEFAULT_IMAGE}"
 
