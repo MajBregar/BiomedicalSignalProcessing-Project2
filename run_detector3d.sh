@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 DEFAULT_IMAGE_FOLDER="./CTMRI/patient1/3"
-OUTPUT_FOLDER="./canny3D_outputs"
+CANNY_2D_OUTPUTS="./canny2D_outputs"
+CANNY_3D_OUTPUTS="./canny3D_outputs"
 
 FOLDER_PATH="${1:-$DEFAULT_IMAGE_FOLDER}"
 
@@ -16,4 +17,6 @@ IMAGE_LIST=$(printf "'%s'," "${IMAGES[@]}")
 IMAGE_LIST="{${IMAGE_LIST%,}}"
 
 
-octave --no-gui --quiet --eval "RunCanny3D($IMAGE_LIST, '$OUTPUT_FOLDER');"
+octave --eval "RunCanny3D($IMAGE_LIST, '$CANNY_2D_OUTPUTS', '$CANNY_3D_OUTPUTS');"
+
+python generate_comparison_pdf.py $FOLDER_PATH $CANNY_2D_OUTPUTS $CANNY_3D_OUTPUTS canny3d_output_comparisons.pdf 4

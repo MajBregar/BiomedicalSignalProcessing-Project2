@@ -1,7 +1,7 @@
 function RunCanny(image_path)
-    SIGMA = 2;
-    T_LOW = 0.06;
-    T_HIGH = 0.2;
+    SIGMA = 3;
+    T_LOW = 0.08;
+    T_HIGH = 0.24;
     DEBUG_PLOTS = true;
 
     t = cputime();

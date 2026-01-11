@@ -1,18 +1,18 @@
-function RunCanny3D(image_path_list, output_folder)
-    SIGMA = 2;
-    T_LOW = 0.06;
-    T_HIGH = 0.2;
+function RunCanny3D(image_path_list, canny2d_output_folder, canny3d_output_folder)
+    SIGMA = 3;
+    T_LOW = 0.08;
+    T_HIGH = 0.24;
     DEBUG_PLOTS = false;
 
     t = cputime();
 
-    cache_folder = 'canny_image_cache';
+    cache_folder = canny2d_output_folder;
     if ~exist(cache_folder, 'dir')
         mkdir(cache_folder);
     end
 
-    if ~exist(output_folder, 'dir')
-        mkdir(output_folder);
+    if ~exist(canny3d_output_folder, 'dir')
+        mkdir(canny3d_output_folder);
     end
 
     M = numel(image_path_list);
@@ -42,7 +42,7 @@ function RunCanny3D(image_path_list, output_folder)
     end
 
 
-    out_path = fullfile(output_folder, sprintf('%04d.png', 1));
+    out_path = fullfile(canny3d_output_folder, sprintf('%04d.png', 1));
     imwrite(canny_edges{1}, out_path);
 
     for n = 1:M-1
@@ -50,7 +50,7 @@ function RunCanny3D(image_path_list, output_folder)
 
         linked = edge_linking(canny_edges{n}, canny_edges{n+1});
 
-        out_path = fullfile(output_folder, sprintf('%04d.png', n+1));
+        out_path = fullfile(canny3d_output_folder, sprintf('%04d.png', n+1));
         imwrite(linked, out_path);
     end
 
@@ -96,25 +96,6 @@ function E_next = edge_linking(E_curr, E_next)
             end
 
             % 5X5 NEIGBOURHOOD
-            all_zero = true;
-            for dy = -2:2
-                for dx = -2:2
-                    ny = y + dy; nx = x + dx;
-                    if ny >= 1 && ny <= H && nx >= 1 && nx <= W
-                        if E_next(ny, nx) == 1
-                            all_zero = false;
-                            break;
-                        end
-                    end
-                end
-                if ~all_zero, break; end
-            end
-
-            if all_zero
-                visited(y, x) = true;
-                continue;
-            end
-
             % LINKING WHEN NOT ALL 0
             for dy = -2:2
                 for dx = -2:2
