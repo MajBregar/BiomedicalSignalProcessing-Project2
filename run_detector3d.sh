@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DEFAULT_IMAGE_FOLDER="./CTMRI/patient1/3"
+DEFAULT_IMAGE_FOLDER="./CTMRI_patient1_3/"
 CANNY_2D_OUTPUTS="./canny2D_outputs"
 CANNY_3D_OUTPUTS="./canny3D_outputs"
 
