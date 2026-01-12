@@ -27,17 +27,19 @@ function edges = CannyEdgeDetection(gs_image, SIGMA, T_LOW, T_HIGH, DEBUG_PLOTS)
     % Gdir_q((Gdir_n >= 22.5) & (Gdir_n < 67.5)) = 45; 
     % Gdir_q((Gdir_n >= 67.5) & (Gdir_n < 112.5)) = 90; 
     % Gdir_q((Gdir_n >= 112.5) & (Gdir_n < 157.5))= 135;
+    % nms = nonMaxSuppression_ORIGINAL(Gmag, Gdir_q);
 
     nms = nonMaxSuppression_INTERPOLATION(Gmag, Ix, Iy);
 
     strong = nms >= T_HIGH;
     weak   = (nms >= T_LOW) & ~strong;
     canny_edges  = hysteresis(strong, weak);
-
     thinned = bwmorph(canny_edges, 'thin', Inf);
 
-    linked_edges = edge_linking_IMPROVED(thinned, 4);
-    linked_edges = edge_linking_IMPROVED(linked_edges, 8);
+    % linked_edges = edge_linking_ORIGINAL(thinned, 0.03);
+    % linked_edges = bwmorph(linked_edges, 'thin', Inf);
+
+    linked_edges = edge_linking_IMPROVED(thinned, 3);
 
     edges = linked_edges;
 

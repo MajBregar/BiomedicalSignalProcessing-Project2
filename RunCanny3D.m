@@ -1,7 +1,7 @@
 function RunCanny3D(image_path_list, canny2d_output_folder, canny3d_output_folder)
-    SIGMA = 3;
-    T_LOW = 0.08;
-    T_HIGH = 0.24;
+    SIGMA = 2.0;
+    T_LOW = 0.075;
+    T_HIGH = 3 * T_LOW;
     DEBUG_PLOTS = false;
 
     t = cputime();
